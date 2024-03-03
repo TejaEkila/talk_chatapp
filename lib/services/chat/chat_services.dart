@@ -1,11 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 
 class ChatService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  Future<void> sendMessage(String receiverUserID, String message) async {
+  Future<void> sendMessage(String receiverUserID, String message, { String messageType = 'text'}) async {
     final String currentUserId = FirebaseAuth.instance.currentUser!.uid;
 
     final Timestamp timestamp = Timestamp.now();

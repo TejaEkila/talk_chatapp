@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously, avoid_print
+
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -12,7 +14,7 @@ import 'package:talk/screens/home.dart';
 
 class WelcomePage extends StatefulWidget {
   final String phoneID;
-  WelcomePage({Key? key, required this.phoneID}) : super(key: key);
+  const WelcomePage({Key? key, required this.phoneID}) : super(key: key);
 
   @override
   State<WelcomePage> createState() => _WelcomePageState();
@@ -107,7 +109,7 @@ class _WelcomePageState extends State<WelcomePage> {
                 height: 200,
                 width: 280,
                 decoration: BoxDecoration(
-                  color: Color.fromARGB(125, 60, 59, 59),
+                  color: const Color.fromARGB(125, 60, 59, 59),
                   shape: BoxShape.circle,
                   image: image != null ? DecorationImage(image: FileImage(image!), fit: BoxFit.cover) : null,
                 ),

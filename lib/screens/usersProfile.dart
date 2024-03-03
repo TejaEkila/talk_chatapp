@@ -1,5 +1,4 @@
-import 'dart:math';
-
+// ignore_for_file: file_names, unused_local_variable, deprecated_member_use, avoid_print
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -37,7 +36,7 @@ class _UserProfileState extends State<UserProfile> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Gap(70),
+          const Gap(50),
           Row(
             children: [
               Expanded(
@@ -46,7 +45,7 @@ class _UserProfileState extends State<UserProfile> {
                       onPressed: () {
                         Navigator.pop(context);
                       },
-                      icon: Icon(
+                      icon: const Icon(
                         Icons.quickreply,
                         color: Colors.blueAccent,
                         size: 80,
@@ -57,51 +56,79 @@ class _UserProfileState extends State<UserProfile> {
                       text: TextSpan(children: [
                     TextSpan(
                       text: widget.name,
-                      style: TextStyle(fontSize: 40),
+                      style: const TextStyle(fontSize: 40),
                     ),
                     TextSpan(
                       text: widget.lastname,
-                      style: TextStyle(fontSize: 30),
+                      style: const TextStyle(fontSize: 30),
                     )
                   ])))
             ],
           ),
-          Gap(10),
+          const Gap(10),
           ClipRRect(
             borderRadius: BorderRadius.circular(10),
             child: Container(
                 height: 500,
                 width: 400,
+                decoration: const BoxDecoration(
+                  color: Color.fromARGB(255, 48, 43, 43),
+                ),
                 child: Image.network(
                   widget.image,
                   fit: BoxFit.cover,
-                ),
-                decoration: BoxDecoration(
-                  color: Colors.amber,
                 )),
           ),
-          Gap(10),
+          const Gap(10),
           Container(
-              height: 100,
+              height: 60,
               width: 400,
-              decoration: BoxDecoration(color: const Color.fromARGB(255, 49, 49, 49), borderRadius: BorderRadius.circular(10)),
+              decoration: BoxDecoration(color: const Color.fromARGB(255, 48, 43, 43), borderRadius: BorderRadius.circular(10)),
               child: Column(
                 children: [
                   Text(
                     widget.bod,
-                    style: TextStyle(fontSize: 20, color: Colors.white),
+                    style: const TextStyle(fontSize: 20, color: Colors.white),
                   ),
                   Text(
                     widget.profession,
-                    style: TextStyle(fontSize: 20, color: Colors.white),
+                    style: const TextStyle(fontSize: 20, color: Colors.white),
                   ),
-                  Text(
-                    widget.bio,
-                    style: TextStyle(fontSize: 20, color: Colors.white),
-                  ),
+                 
                 ],
-              )),
-          Gap(20),
+              )
+              ),
+              Gap(10),
+              Column(
+                      children: [
+                        Stack(
+                          children: [
+                            Center(
+                              child: Container(
+                                height: 80,
+                                width: 400,
+                                decoration: BoxDecoration(
+                                  color: const Color.fromARGB(255, 48, 43, 43),
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 20),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const Gap(20),
+                                  Text(widget.bio, style: const TextStyle(fontSize: 17, color: Colors.white)),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+          const Gap(14),
           GestureDetector(
             onTap: () {
               setState(() {});
@@ -111,8 +138,11 @@ class _UserProfileState extends State<UserProfile> {
             child: Container(
               height: 60,
               width: 200,
-              color: Colors.blue,
-              child: Center(child: Text("Linkedin",style: TextStyle( fontSize: 20,color: Colors.white),)),
+              
+              decoration: BoxDecoration(
+                color: Colors.blue,
+                borderRadius: BorderRadius.circular(10)),
+              child: const Center(child: Text("Linkedin",style: TextStyle( fontSize: 20,color: Colors.white),)),
             ),
           )
         ],

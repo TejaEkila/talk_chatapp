@@ -1,4 +1,4 @@
-// ignore_for_file: await_only_futures, must_be_immutable
+// ignore_for_file: await_only_futures, must_be_immutable, use_build_context_synchronously, avoid_print, non_constant_identifier_names, unnecessary_brace_in_string_interps, use_key_in_widget_constructors
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -26,7 +26,7 @@ class _OptPageState extends State<OptPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
+    
     super.initState();
     verifyPhone_number();
   }
@@ -57,7 +57,7 @@ class _OptPageState extends State<OptPage> {
         showDialog(
             context: context,
             builder: (context) {
-              return AlertDialog();
+              return const AlertDialog();
             });
       },
       codeSent: (String? verificationID, int? resendToken) {
@@ -71,7 +71,7 @@ class _OptPageState extends State<OptPage> {
           _verificationCode = verificationID;
         });
       }),
-      timeout: Duration(seconds: 60),
+      timeout: const Duration(seconds: 60),
     );
   }
 
@@ -84,7 +84,7 @@ class _OptPageState extends State<OptPage> {
       if (snapshot.exists) {
         Navigator.push(context, MaterialPageRoute(
           builder: (context) {
-            return HomePage();
+            return const HomePage();
           },
         ));
       } else {
@@ -101,6 +101,7 @@ class _OptPageState extends State<OptPage> {
     }
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
@@ -108,7 +109,7 @@ class _OptPageState extends State<OptPage> {
         child: Padding(
           padding: const EdgeInsets.only(top: 250),
           child: Column(children: [
-            Column(
+            const Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
@@ -125,7 +126,7 @@ class _OptPageState extends State<OptPage> {
                 ),
               ],
             ),
-            Gap(40),
+            const Gap(40),
             mytextfield(
               Controller: otpController,
               hinttext: "otp",
@@ -147,12 +148,12 @@ class _OptPageState extends State<OptPage> {
               },
               buttontext: isLoading ? "Loading..." : "Submit",
             ),
-            Gap(10),
+            const Gap(10),
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Gap(40),
-                Text("If you didn't reeive a code!",style: TextStyle(color: Colors.white,fontSize: 18),), TextButton(onPressed: () {}, child: Text("Resend",style: TextStyle(fontSize: 20,color: Colors.blueAccent),))],
+                const Gap(40),
+                const Text("If you didn't reeive a code!",style: TextStyle(color: Colors.white,fontSize: 18),), TextButton(onPressed: () {}, child: const Text("Resend",style: TextStyle(fontSize: 20,color: Colors.blueAccent),))],
             )
           ]),
         ),

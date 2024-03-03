@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
 import 'package:talk/screens/Profile.dart';
 import 'package:talk/services/chat/chat_page.dart';
 
@@ -13,10 +12,17 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  late String currentUserID;
+  List<String> recentChats = [];
+
+  @override
+  void initState() {
+    super.initState();
+    currentUserID = FirebaseAuth.instance.currentUser!.uid;
+  }
+
   @override
   Widget build(BuildContext context) {
-    final User? user = FirebaseAuth.instance.currentUser;
-
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
@@ -25,23 +31,23 @@ class _HomePageState extends State<HomePage> {
           padding: const EdgeInsets.all(8),
           child: GestureDetector(
             onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => ProfilePage()));
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const ProfilePage()));
             },
             child: CircleAvatar(
               backgroundColor: Colors.white,
               child: StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
-                stream: FirebaseFirestore.instance.collection("users").doc(user?.uid).snapshots(),
+                stream: FirebaseFirestore.instance.collection("users").doc(currentUserID).snapshots(),
                 builder: (context, snapshot) {
                   if (snapshot.hasError) {
                     return Text("Error: ${snapshot.error}");
                   }
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return CircularProgressIndicator();
+                    return const CircularProgressIndicator();
                   }
                   var data = snapshot.data?.data();
                   if (data == null || data.isEmpty || !data.containsKey('imageurl')) {
                     // Return a placeholder if no image URL is available
-                    return Icon(Icons.person);
+                    return const Icon(Icons.person);
                   } else {
                     // Display the user's image using the retrieved URL
                     return CircleAvatar(
@@ -56,14 +62,14 @@ class _HomePageState extends State<HomePage> {
         actions: [
           IconButton(
             onPressed: () {},
-            icon: Icon(
+            icon: const Icon(
               Icons.search,
               size: 30,
               color: Colors.white,
             ),
           )
         ],
-        title: Row(
+        title: const Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(
@@ -93,6 +99,7 @@ class _HomePageState extends State<HomePage> {
 
         // Filter out the current user's data from the snapshot
         final filteredUsers = users.where((user) => user.id != currentUserUid).toList();
+
 
         return ListView.builder(
           itemBuilder: (BuildContext context, int index) {
@@ -127,7 +134,7 @@ class _HomePageState extends State<HomePage> {
                           linkedin: linkedin,
                           lastname: lastname,
                           dob: dob,
-                          bio:bio,
+                          bio: bio,
                         ),
                       ),
                     );
@@ -140,7 +147,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                   title: Text(
                     name,
-                    style: TextStyle(color: Colors.white),
+                    style: const TextStyle(color: Colors.white),
                   ),
                   trailing: IconButton(
                     icon: const Icon(

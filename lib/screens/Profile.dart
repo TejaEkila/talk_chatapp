@@ -1,8 +1,10 @@
+// ignore_for_file: avoid_print, deprecated_member_use, use_key_in_widget_constructors, use_build_context_synchronously, file_names
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart'; // Unused import
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:talk/screens/Editprofile.dart';
 import 'package:talk/screens/login.dart';
 import 'package:url_launcher/url_launcher.dart'; // Unused import
 
@@ -22,6 +24,47 @@ class _ProfilePageState extends State<ProfilePage> {
     }
   }
 
+  void _alterDiaglog() {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            backgroundColor: Color.fromARGB(255, 48, 43, 43),
+            title: Center(
+                child: Icon(
+              Icons.warning_amber_rounded,
+              size: 40,
+              color: Colors.blueAccent,
+            )),
+            content: Text("Are you sure ??",style: TextStyle(color: Colors.white, fontSize: 17),),
+            elevation: 0,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10), // Add border radius if needed
+            ),
+            actions: [
+              MaterialButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text(
+                  "cancle",
+                  style: TextStyle(color: Colors.white, fontSize: 15),
+                ),
+              ),
+              MaterialButton(
+                onPressed: () async {
+                  await FirebaseAuth.instance.signOut();
+                  SharedPreferences pref = await SharedPreferences.getInstance();
+                  await pref.setBool("statuslog", false);
+                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const LoginPage()));
+                },
+                child: Text("logout", style: TextStyle(color: Colors.white, fontSize: 15)),
+              )
+            ],
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     final User? user = FirebaseAuth.instance.currentUser;
@@ -29,7 +72,7 @@ class _ProfilePageState extends State<ProfilePage> {
       backgroundColor: Colors.black,
       appBar: AppBar(
         backgroundColor: Colors.black,
-        title: Text(
+        title: const Text(
           "profile",
           style: TextStyle(color: Colors.white),
         ),
@@ -38,7 +81,7 @@ class _ProfilePageState extends State<ProfilePage> {
           onPressed: () {
             Navigator.pop(context);
           },
-          icon: Icon(
+          icon: const Icon(
             Icons.arrow_back_ios,
             color: Colors.white,
           ),
@@ -51,7 +94,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   context: context,
                   builder: (BuildContext context) {
                     return Container(
-                      decoration: BoxDecoration(color: Color.fromARGB(255, 196, 194, 196), borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20))),
+                      decoration: const BoxDecoration(color: Color.fromARGB(255, 48, 43, 43), borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20))),
                       height: 140,
                       child: Center(
                           child: Column(
@@ -60,29 +103,36 @@ class _ProfilePageState extends State<ProfilePage> {
                           Container(
                             height: 5,
                             width: 55,
-                            
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(10)),
+                            decoration: BoxDecoration(color: Colors.blueAccent, borderRadius: BorderRadius.circular(10)),
                           ),
-                          Gap(20),
-                          Container(
+                          const Gap(20),
+                          const SizedBox(
                             height: 50,
                             width: 400,
-                            child: Center(child: Text("Share",style: TextStyle(fontSize: 17,color: Colors.black),)),
+                            child: Center(
+                                child: Text(
+                              "Share",
+                              style: TextStyle(fontSize: 17, color: Colors.white),
+                            )),
                           ),
-                          
-                          Container(
+                          const SizedBox(
                             height: 50,
                             width: 400,
-                            child: Center(child: Text("Deactive",style: TextStyle(fontSize: 17,color: Colors.black),)),
+                            child: Center(
+                                child: Text(
+                              "Deactive",
+                              style: TextStyle(fontSize: 17, color: Colors.white),
+                            )),
                           )
                         ],
                       )),
                     );
                   });
             },
-            icon: Icon(Icons.menu,color: Colors.white,),
+            icon: const Icon(
+              Icons.menu,
+              color: Colors.white,
+            ),
           ),
         ],
       ),
@@ -147,45 +197,39 @@ class _ProfilePageState extends State<ProfilePage> {
                             ],
                           ),
                           Text("${data["profession"]}", style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w400, color: Color.fromARGB(255, 116, 115, 115))),
-                          TextButton(
-                            onPressed: () {
-                              setState(() {});
-                              print("working");
-                              launchURL(data['linkedin']);
-                            },
-                            child: Text(data["linkedin"], style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w400, color: Colors.blue)),
-                          )
                         ],
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 330),
+                      padding: const EdgeInsets.only(top: 300),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           GestureDetector(
                             onTap: () async {
-                              await FirebaseAuth.instance.signOut();
-                              SharedPreferences pref = await SharedPreferences.getInstance();
-                              await pref.setBool("statuslog", false);
-                              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const LoginPage()));
+                              _alterDiaglog();
                             },
                             child: Container(
                               height: 50,
                               width: 200,
-                              decoration: BoxDecoration(color: Colors.blue, borderRadius: BorderRadius.circular(10)),
-                              child: Center(
+                              decoration: BoxDecoration(color: const Color.fromARGB(255, 48, 43, 43), borderRadius: BorderRadius.circular(10)),
+                              child: const Center(
                                   child: Text(
                                 "logout",
-                                style: TextStyle(fontSize: 17, color: Colors.black),
+                                style: TextStyle(fontSize: 17, color: Colors.white),
                               )),
                             ),
                           ),
-                          Container(
-                            height: 50,
-                            width: 200,
-                            decoration: BoxDecoration(color: Colors.amber, borderRadius: BorderRadius.circular(10)),
-                            child: Center(child: Text("edit", style: TextStyle(fontSize: 17, color: Colors.black))),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => const EditProfile()));
+                            },
+                            child: Container(
+                              height: 50,
+                              width: 200,
+                              decoration: BoxDecoration(color: const Color.fromARGB(255, 48, 43, 43), borderRadius: BorderRadius.circular(10)),
+                              child: const Center(child: Text("edit", style: TextStyle(fontSize: 17, color: Colors.white))),
+                            ),
                           ),
                         ],
                       ),
@@ -193,7 +237,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     Column(
                       children: [
                         Padding(
-                          padding: const EdgeInsets.only(top: 390),
+                          padding: const EdgeInsets.only(top: 360),
                           child: Stack(
                             children: [
                               Center(
@@ -201,7 +245,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                   height: 80,
                                   width: 410,
                                   decoration: BoxDecoration(
-                                    color: Color.fromRGBO(133, 127, 247, 1),
+                                    color: const Color.fromARGB(255, 48, 43, 43),
                                     borderRadius: BorderRadius.circular(10),
                                   ),
                                 ),
@@ -212,8 +256,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Gap(20),
-                                    Text("${data['Bio']}", style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w400, color: Colors.white)),
+                                    const Gap(20),
+                                    Text("${data['Bio']}", style: const TextStyle(fontSize: 17, color: Colors.white)),
                                   ],
                                 ),
                               ),

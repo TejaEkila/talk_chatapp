@@ -1,10 +1,9 @@
+// ignore_for_file: use_key_in_widget_constructors, use_build_context_synchronously
+
 import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:talk/screens/home.dart';
 import 'package:talk/screens/login.dart';
@@ -25,7 +24,7 @@ class _ServerState extends State<Server> {
   }
 
   _startTimer() async {
-    Timer(Duration(seconds: 3), () {
+    Timer(const Duration(seconds: 3), () {
       checkLogin();
       setState(() {});
     });
@@ -40,11 +39,11 @@ class _ServerState extends State<Server> {
 
     if (statuslog == false || statuslog == null) {
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
-        return LoginPage();
+        return const LoginPage();
       }));
     } else {
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
-        return HomePage();
+        return const HomePage();
       }));
     }
   }

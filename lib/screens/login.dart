@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_print, prefer_const_constructors
+// ignore_for_file: avoid_print, prefer_const_constructors, use_key_in_widget_constructors, unnecessary_string_interpolations
 import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -18,7 +18,7 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
+    
     super.initState();
   }
 
@@ -65,7 +65,10 @@ class _LoginPageState extends State<LoginPage> {
                 child: InkWell(
                   onTap: () {
                     showCountryPicker(
+                      
                       countryListTheme: CountryListThemeData(
+                        textStyle: TextStyle(color: Colors.white),
+                        backgroundColor: Color.fromARGB(255, 48, 43, 43),
                         bottomSheetHeight: 500,
                       ),
                       context: context,
